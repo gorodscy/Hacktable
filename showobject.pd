@@ -2,8 +2,8 @@
 #X declare -lib iemmatrix;
 #X obj 43 -6 inlet;
 #X obj -9 71 inlet;
-#X obj 306 145 makesound;
-#X obj 306 172 outlet~;
+#X obj 210 186 makesound;
+#X obj 210 213 outlet~;
 #X obj 147 -43 r start;
 #X obj 54 127 showblob \$1;
 #X obj 24 104 spigot;
