@@ -72,9 +72,9 @@
 #X obj 149 39 r start;
 #X obj 149 222 matrix;
 #X obj 149 61 metro 50;
-#X obj 149 135 delay 3000;
 #X obj 149 114 spigot;
 #X obj 149 86 f 1;
+#X obj 149 135 delay 300;
 #X connect 0 0 22 1;
 #X connect 1 0 2 0;
 #X connect 1 1 3 0;
@@ -88,7 +88,7 @@
 #X connect 12 0 11 0;
 #X connect 13 0 10 0;
 #X connect 14 0 10 2;
-#X connect 14 0 25 1;
+#X connect 14 0 24 1;
 #X connect 16 0 1 0;
 #X connect 17 0 10 1;
 #X connect 18 0 20 0;
@@ -97,7 +97,7 @@
 #X connect 21 0 23 0;
 #X connect 22 0 16 0;
 #X connect 22 0 17 0;
-#X connect 23 0 26 0;
-#X connect 24 0 18 0;
+#X connect 23 0 25 0;
+#X connect 24 0 26 0;
 #X connect 25 0 24 0;
-#X connect 26 0 25 0;
+#X connect 26 0 18 0;
