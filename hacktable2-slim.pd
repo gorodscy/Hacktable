@@ -1,0 +1,65 @@
+#N canvas 0 54 1280 746 10;
+#X obj 366 388 pix_texture;
+#X obj 349 20 gemhead;
+#X obj 25 131 gemwin;
+#X msg 21 76 create \, 1;
+#X msg 96 77 destroy;
+#X obj 408 28 hradio 15 1 0 8 empty empty empty 0 -8 0 10 -262144 -1
+-1 0;
+#X text 19 20 2 clique aqui para exibir a janela de video;
+#X obj 26 45 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 427 292 pix_opencv_bgstats;
+#X obj 653 157 / 100;
+#X floatatom 659 121 5 0 100 0 - - -;
+#X floatatom 658 193 5 0 0 0 - - -;
+#X msg 597 192 erode \$1;
+#X floatatom 681 230 5 0 0 0 - - -;
+#X msg 611 228 minarea \$1;
+#X text 725 235 ( default : 10x10 );
+#X msg 633 262 reset;
+#X text 695 111 amount of time after which an object is deleted from
+the foreground ( default : 0.1 seconds );
+#X text 696 183 number of iterations of the erode-dilate filter;
+#X text 698 194 to eliminate small forms and noise;
+#X text 728 224 minimum size of foreground objects;
+#X text 677 263 resetting the background;
+#X text 698 205 ( default : 2 );
+#X msg 592 157 alpha \$1;
+#X msg 405 68 device \$1;
+#X obj 351 100 pix_video;
+#X text 407 8 1 selecione a camera;
+#X msg 142 109 dimen 40 40;
+#X obj 301 433 square 3;
+#X msg 461 353 quality \$1;
+#X obj 459 336 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0
+1;
+#X text 540 351 off == GL_NEAREST (faster render);
+#X obj 433 129 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 375 185 gate 2;
+#X text 449 127 toggle orig vid;
+#X connect 0 0 28 0;
+#X connect 1 0 25 0;
+#X connect 3 0 2 0;
+#X connect 4 0 2 0;
+#X connect 5 0 24 0;
+#X connect 7 0 3 0;
+#X connect 8 0 0 0;
+#X connect 9 0 23 0;
+#X connect 10 0 9 0;
+#X connect 10 0 9 1;
+#X connect 11 0 12 0;
+#X connect 12 0 8 0;
+#X connect 13 0 14 0;
+#X connect 14 0 8 0;
+#X connect 16 0 8 0;
+#X connect 23 0 8 0;
+#X connect 24 0 25 0;
+#X connect 25 0 33 0;
+#X connect 27 0 2 0;
+#X connect 29 0 0 0;
+#X connect 30 0 29 0;
+#X connect 32 0 33 1;
+#X connect 33 0 0 0;
+#X connect 33 1 8 0;
