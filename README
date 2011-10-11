@@ -1,0 +1,32 @@
+This project implements the Air Hack Table, an artistic or musical
+instrument based on floating origamis observed by webcams. See
+
+  http://wiki.nosdigitais.teia.org.br/AirHackTable
+
+
+= The Code =
+
+== Pure Data Patches ==
+
+The file hacktable.pd is the main file, to be loaded into pd-extended
+  http://puredata.info
+
+
+== Scilab Scripts ==
+
+In scilab/ you will find a couple of scripts, e.g. for color detection, which
+were developed/fine tuned in scilab. These are not executed into the hacktable,
+but are merely used to develp and throughly test different algorithms.
+
+
+= Authors =
+
+Fernando Gorodscy
+Ricardo Fabbri
+
+
+(c) 2011 Lab Macambira Team  http://labmacambira.sf.net
+
+This software is licenced under the GPL. If you wish for another licence,
+you can negotiate with us and, for a considerable sum, we might release a
+different license as a rare exception.
