@@ -18,6 +18,13 @@ In scilab/ you will find a couple of scripts, e.g. for color detection, which
 were developed/fine tuned in scilab. These are not executed into the hacktable,
 but are merely used to develp and throughly test different algorithms.
 
+You can test the color detection algorithm (or your modifications to it) to get
+precise confidence numbers using our custom-made color detection dataset based
+on origami papers and other color objects. You can find a link to this dataset 
+at 
+  http://wiki.nosdigitais.teia.org.br/AirHackTable
+ 
+  
 
 = Authors =
 
