@@ -14,6 +14,9 @@ sip_quiet;
 // se quiser, insira o caminho pras imagens aqui
 mypath="/home/rfabbri/lib/pics/test-imgs/color-webcam-db/lenovo/easy/";
 
+//method = 'hsv_sip';
+method = 'distance_to_reference'
+
 
 // precomputed medians
 has_medians=%t;
@@ -47,11 +50,11 @@ for i=1:nimgs
 
   if has_medians
     [class, certainty, confidence, secondary_class] =...
-      color_classify_single(medians(i,:),'hsv_sip');
+      color_classify_single(medians(i,:),method);
   else
     im = imread(fs(i));
     [class, certainty, confidence, secondary_class] =...
-      color_classify(im,'hsv_sip','median');
+      color_classify(im,'hsv_sip',method);
   end
 
 
