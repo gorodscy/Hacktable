@@ -1,3 +1,7 @@
+//
+// = Note =
+// A complete version of this is in SIP, function color_classify.sci
+//
 // = Description = 
 // Simple script for classifying an image window into Red, Green, Blue, and others.
 // Should work well under different lighting conditions and is robust to wrong white
@@ -46,10 +50,10 @@ hue = hue * 360;
 
 if val < 0.2 & sat < 0.8
   disp 'black';
-  exit;
+  return;
 elseif val > 0.8 & sat < 0.1
   disp 'white';
-  exit;
+  return;
 end
 
 // At this point we have
