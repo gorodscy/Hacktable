@@ -13,6 +13,10 @@ sip_quiet;
 
 // se quiser, insira o caminho pras imagens aqui
 mypath="/home/rfabbri/lib/pics/test-imgs/color-webcam-db/lenovo/easy/";
+// hard!:
+//mypath="/home/rfabbri/lib/pics/test-imgs/color-webcam-db/lenovo/";
+
+//mypath="./"
 
 //method = 'hsv_sip';
 method = 'distance_to_reference'
@@ -25,10 +29,6 @@ if has_medians
   load(fmedians,'medians');
 end
 
-// hard!:
-//mypath="/home/rfabbri/lib/pics/test-imgs/color-webcam-db/lenovo/";
-
-//mypath="./"
 fs = ls(mypath+'*.jpg');
 
 acertos=0;
