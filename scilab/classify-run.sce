@@ -1,5 +1,5 @@
 // Para rodar:
-// - primeiro entre no diretorio da base de dados
+// - primeiro ponha o caminho pra base de dados em mypath abaixo
 // - execute este script no scilab
 // - precisa do SIP
 //
@@ -13,6 +13,18 @@ sip_quiet;
 
 // se quiser, insira o caminho pras imagens aqui
 mypath="/home/rfabbri/lib/pics/test-imgs/color-webcam-db/lenovo/easy/";
+
+
+// precomputed medians
+has_medians=%t;
+fmedians=mypath + 'medians.dat';
+if has_medians
+  load(fmedians,'medians');
+end
+
+// hard!:
+//mypath="/home/rfabbri/lib/pics/test-imgs/color-webcam-db/lenovo/";
+
 //mypath="./"
 fs = ls(mypath+'*.jpg');
 
@@ -31,8 +43,19 @@ for i=1:nimgs
   disp ('classifying' + fs(i));
   true_class=unix_g('echo ' + basename(fs(i)) + '|grep -o ^[^\/-]*-|grep -o [^-]*');
   true_classes(i) = true_class;
-  im = imread(fs(i));
-  [class, certainty, confidence, secondary_class] = color_classify(im);
+
+
+  if has_medians
+    [class, certainty, confidence, secondary_class] =...
+      color_classify_single(medians(i,:),'hsv_sip');
+  else
+    im = imread(fs(i));
+    [class, certainty, confidence, secondary_class] =...
+      color_classify(im,'hsv_sip','median');
+  end
+
+
+
   certainties(i) = certainty;
 
   classes(i) = class;
@@ -67,4 +90,4 @@ tf=(true_classes==classes);
 ei=find(tf == %f)';
 disp 'Mistakes:';
 disp 'ground truth | detected | secondary detected | certainty | file | id';
-[true_classes(ei),classes(ei),secondary_classes(ei),certainties(ei),basename(fs(ei)), string(ei)]
+res=[true_classes(ei),classes(ei),secondary_classes(ei),certainties(ei),basename(fs(ei)), string(ei)]
