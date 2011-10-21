@@ -7,19 +7,20 @@
 //
 // scilab -nw | tee saida.txt
 //
+mode(-1);
+lines(0); // no vertical paging
 stacksize(20000000);
 sip_quiet;
 //sip_wordy;
 
 // se quiser, insira o caminho pras imagens aqui
-mypath="/home/rfabbri/lib/pics/test-imgs/color-webcam-db/lenovo/easy/";
-// hard!:
-//mypath="/home/rfabbri/lib/pics/test-imgs/color-webcam-db/lenovo/";
+//mypath="/home/rfabbri/lib/pics/test-imgs/color-webcam-db/lenovo/easy/";
+mypath="/home/rfabbri/lib/pics/test-imgs/color-webcam-db/lenovo/";
 
 //mypath="./"
 
-//method = 'hsv_sip';
-method = 'distance_to_reference'
+method = 'hsv_sip';
+//method = 'distance_to_reference'
 
 
 // precomputed medians
@@ -54,7 +55,7 @@ for i=1:nimgs
   else
     im = imread(fs(i));
     [class, certainty, confidence, secondary_class] =...
-      color_classify(im,'hsv_sip',method);
+      color_classify(im,method);
   end
 
 
