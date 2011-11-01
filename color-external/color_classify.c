@@ -1,11 +1,12 @@
 #include <stdio.h>
 
-typedef enum {BLACK, WHITE, RED, GREEN, BLUE, YELLOW, BLUEGREEN, PURPLEPINK} color;
+typedef enum {BLACK, WHITE, RED, GREEN, BLUE, YELLOW, BLUE_GREEN, PURPLE_PINK_LAVENDER, PURPLE_PINK_MAGENTA, GRAY, NONE} color;
+typedef enum {UNRELIABLE, GOOD_GUESS, CERTAIN} certainty;
 
 float MAX (float a, float b, float c);
 float MIN (float a, float b, float c);
 void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v );
-void color_classify (float red, float green, float blue, color *result, int *sure);
+void color_classify (float red, float green, float blue, color *result, color *second_guess, certainty *sure);
 
 
 int main (int argc, const char * argv[])
@@ -21,49 +22,195 @@ int main (int argc, const char * argv[])
 
 
 
-void color_classify (float red, float green, float blue, color *result, int *sure)
+void color_classify (float red, float green, float blue, color *result, color *second_guess, certainty *certainty_level)
 {
     float hue;
     float sat;
     float val;
     
-    *sure = 1;
+    *certainty_level = CERTAIN;
+    *result = NONE;
+    *second_guess = NONE;
     
     RGBtoHSV(red, green, blue, &hue, &sat, &val);
     
-    if (val < 0.2 && sat < 0.8) {
-        *result = BLACK;
-        return;
-    } else if (val > 0.8 && sat < 0.1) {
-        *result = WHITE;
-        return;
-    }
-    
-    // At this point we have
-    // val > 0.2 | (val < 0.8 | sat > 0.1)
-    
-    if (hue < 30 || hue > 330) {
-        *result = RED;
-    } else if (hue > 90 && hue < 150) {
-        *result = GREEN;
-    } else if (hue > 185 && hue < 270) {
-        *result = BLUE;
-    } else { // disp 'unreliable color...';
-        *sure = 0;
-        // in the real system you just discard this estimate and use the previous
-        // estimate (e.g. previous frame) at this point
-        if (hue >= 30 && hue <= 90) {
-            *result = YELLOW;
-        } else if (hue >= 150 && hue <= 185) {
-            if (hue >= 180) {
-                *result = BLUE;
-            } else {
-                *result = BLUEGREEN;
+    if (val < 0.3) {
+        if (sat > 0.3 && val > 0.2) {
+            *result = BLACK;
+            if (sat > 0.6 && (hue >= 65 && hue <= 170)) {
+                *result = GREEN;
+                return;
+            } 
+            else if (sat > 0.8) {
+                *certainty_level = UNRELIABLE;
+            } 
+            else {
+                *certainty_level = GOOD_GUESS;
             }
-        } else if (hue >= 270 && hue <= 330) {
-            *result = PURPLEPINK;
+            // will proceed below to guessing colors
+        }
+        else {
+            *result = BLACK;
         }
     }
+    else if ((val > 0.8 && sat < 0.2) || (val > 0.7 && sat < 0.1) || (val > 0.6 && sat < 0.05)) {
+        *result = WHITE;
+        if (sat > 0.1) {
+            // light baby colors; could be white with offset colorbalance.
+            certainty_level = UNRELIABLE;
+            // will proceed below to guessing colors
+            *result = NONE;
+            *second_guess = WHITE;
+        }
+        else {
+            if (val < 0.7) {
+                *second_guess = GRAY;
+                *certainty_level = GOOD_GUESS;
+            }
+            return;
+        }
+    }
+    else if ((val < 0.65 && sat < 0.15) || (val < 0.7 && sat < 0.1) || (val < 0.5 && sat < 0.3 && (hue < 40 && hue > 10))) { // heuristica ~ marrons
+        if (val < 0.50) {
+            *result = BLACK;
+            *certainty_level = GOOD_GUESS;
+            if (val > 0.40) {
+                *second_guess = GRAY;
+            }
+            return;
+        }
+        else {
+            if (sat < 0.08) {
+                *certainty_level = GOOD_GUESS;
+                *result = WHITE;
+                *second_guess = GRAY;
+                return;
+            }
+            else {
+                *certainty_level = UNRELIABLE;
+                *second_guess = GRAY;
+            }
+        }
+    }
+    
+    //RED
+    if (hue < 30 || hue > 330) {
+        if (hue > 10 && hue <= 30 && sat < 0.4) {
+            if (hue > 20) { 
+                *result = YELLOW;
+                *certainty_level = GOOD_GUESS;
+                if (val < 0.7) {
+                    *second_guess = GRAY;
+                }
+            }
+            else { 
+                *result = RED;
+                *certainty_level = UNRELIABLE;
+                if (val < 0.7) {
+                    *second_guess = GRAY;
+                }
+            }
+        }
+        else {
+            *result = RED;
+            if ((sat < 0.3 && val < 0.6) | (sat < 0.4 & val < 0.35)) {
+                if (*certainty_level == CERTAIN) {
+                    *certainty_level = GOOD_GUESS;
+                }
+            }
+        }
+    }
+    // GREEN
+    else if (hue > 80 && hue < 170) {
+        *result = GREEN;
+        if (sat < 0.2) {
+            if (*certainty_level == CERTAIN) {
+                *certainty_level = GOOD_GUESS;
+            }
+        }
+        if (hue > 160 && (sat < 0.6 || val > 0.6)) {
+            *certainty_level = UNRELIABLE;
+            *second_guess = BLUE;
+        }
+    }
+    // BLUE
+    else if (hue > 185 && hue < 270) {
+        if (sat < 0.3) { 
+            if (*certainty_level == CERTAIN) {
+                *certainty_level = GOOD_GUESS;
+            }
+            if (val > 0.75) {
+                *result = WHITE;
+                *second_guess= BLUE;
+                if (*certainty_level == CERTAIN) {
+                    *certainty_level = GOOD_GUESS;
+                }
+            }
+            else {
+                *result = BLUE;
+                if (val < 0.6) {
+                    *second_guess = GRAY;
+                }
+                else {
+                    *second_guess = WHITE;
+                }
+            }
+        }
+        else {
+            *result = BLUE;
+        }
+    }
+    // remaining YELLOW + OTHER cases
+    else {
+        if (sat < 0.5) {
+            *certainty_level = UNRELIABLE;
+        }
+        // in the real system you just discard this estimate and use the previous
+        // estimate (e.g. previous frame) at this point
+        if (hue >= 30 && hue <= 80) {
+            if (hue >= 70 && val <= 70) {
+                *result = GREEN;
+            }
+            else {
+                *result = YELLOW;
+            }
+        }
+        else {
+            if (*certainty_level == CERTAIN) {
+                *certainty_level = GOOD_GUESS;
+            }
+            if (hue >= 150 && hue <= 185) {
+                // hard test near cyan and put a secondary label.
+                if (hue >= 180) {
+                    *result = BLUE;
+                }
+                else if (hue < 170) {
+                    *result = GREEN;
+                    *second_guess = BLUE;
+                }
+                else {
+                    *result = BLUE;
+                    *second_guess = GREEN;
+                }
+            }
+            else if (hue >= 270 && hue <= 330) {
+                // hard test near magenta and put a secondary label.
+                if (hue < 280) {
+                    *result = BLUE;
+                    if (*second_guess == NONE) {
+                        *second_guess = PURPLE_PINK_LAVENDER;
+                    }
+                }
+                else {
+                    *result = RED;
+                    if (*second_guess == NONE) {
+                        *second_guess = PURPLE_PINK_MAGENTA;
+                    }
+                }
+            }
+        }
+    }
+    return;
 }
 
 float MAX (float a, float b, float c)
