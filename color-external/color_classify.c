@@ -1,26 +1,5 @@
 #include <stdio.h>
-
-typedef enum {BLACK, WHITE, RED, GREEN, BLUE, YELLOW, BLUE_GREEN, PURPLE_PINK_LAVENDER, PURPLE_PINK_MAGENTA, GRAY, NONE} color;
-typedef enum {UNRELIABLE, GOOD_GUESS, CERTAIN} certainty;
-
-float MAX (float a, float b, float c);
-float MIN (float a, float b, float c);
-void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v );
-void color_classify (float red, float green, float blue, color *result, color *second_guess, certainty *sure);
-
-
-int main (int argc, const char * argv[])
-{
-
-    
-    
-    
-    
-    return 0;
-}
-
-
-
+#include "color_classify.h"
 
 void color_classify (float red, float green, float blue, color *result, color *second_guess, certainty *certainty_level)
 {
@@ -36,7 +15,7 @@ void color_classify (float red, float green, float blue, color *result, color *s
     
     if (val < 0.3) {
         if (sat > 0.3 && val > 0.2) {
-            *result = BLACK;
+            *second_guess = BLACK;
             if (sat > 0.6 && (hue >= 65 && hue <= 170)) {
                 *result = GREEN;
                 return;
@@ -51,6 +30,7 @@ void color_classify (float red, float green, float blue, color *result, color *s
         }
         else {
             *result = BLACK;
+            return;
         }
     }
     else if ((val > 0.8 && sat < 0.2) || (val > 0.7 && sat < 0.1) || (val > 0.6 && sat < 0.05)) {
