@@ -11,6 +11,9 @@ instrument based on floating origamis observed by webcams. See
 The file hacktable.pd is the main file, to be loaded into pd-extended
   http://puredata.info
 
+== Pure Data Externals ==
+
+See the subdir "cor" and the README file in there.
 
 == Scilab Scripts ==
 

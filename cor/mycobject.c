@@ -27,7 +27,7 @@ void mycobject_rats(t_mycobject *x)
 
     /* this is a pointer to the class for "mycobject", which is created in the
     "setup" routine below and used to create new ones in the "new" routine. */
-t_class *mycobject_class;
+static t_class *mycobject_class;
 
     /* this is called when a new "mycobject" object is created. */
 void *mycobject_new(void)
