@@ -21,99 +21,15 @@ static t_class *colordetect_class;
 void 
 print_color_pd (color result, color second, certainty certainty_level) 
 {
-    switch (result) {
-        case BLACK:
-            post("black ");
-            break;
-            
-        case WHITE:
-            post("white ");
-            break;
-            
-        case RED:
-            post("red ");
-            break;
-            
-        case GREEN:
-            post("green ");
-            break;
-            
-        case BLUE:
-            post("blue ");
-            break;
-            
-        case YELLOW:
-            post("yellow ");
-            break;
-            
-        default:
-            post("none ");
-            break;
-    }
-    
-    switch (second) {
-        case BLACK:
-            post("black ");
-            break;
-            
-        case WHITE:
-            post("white ");
-            break;
-            
-        case RED:
-            post("red ");
-            break;
-            
-        case GREEN:
-            post("green ");
-            break;
-            
-        case BLUE:
-            post("blue ");
-            break;
-            
-        case YELLOW:
-            post("yellow ");
-            break;
+  extern char *color_name[], *certainty_name[];
+  assert(result < num_colors);
+  post("%s ", color_name[result]);
 
-        case BLUE_GREEN:
-            post("blue-green ");
-            break;
-            
-        case PURPLE_PINK_LAVENDER:
-            post("purple-pink-lavender ");
-            break;
-            
-        case PURPLE_PINK_MAGENTA:
-            post("purple-pink-magenta ");
-            break;
-            
-        case GRAY:
-            post("gray ");
-            break;
-            
-        default:
-            post("none ");
-            break;
-    }
+  assert(second < num_colors);
+  post("%s ", color_name[second]);
     
-    switch (certainty_level) {
-        case CERTAIN:
-            post("certain\n");
-            break;
-            
-        case GOOD_GUESS:
-            post("good-guess\n");
-            break;
-            
-        case UNRELIABLE:
-            post("unreliable\n");
-            break;
-            
-        default:
-            post("error\n");
-            break;
-    }
+  assert(certainty_level < 3);
+  post("%s\n", certainty_name[certainty_level]);
 }
 
 /*----------------------------------------------------------------------*/

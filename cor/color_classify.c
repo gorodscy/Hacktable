@@ -4,6 +4,27 @@
 static float MAX (float a, float b, float c);
 static float MIN (float a, float b, float c);
 
+char *color_name[num_colors]  = {
+  "black",
+  "white",
+  "red",
+  "green",
+  "blue",
+  "yellow",
+  "blue-green",
+  "purple-pink-lavender",
+  "purple-pink-magenta",
+  "gray",
+  "none"
+};
+
+
+char *certainty_name[3] =  {
+  "unreliable",
+  "good-guess",
+  "certain"
+};
+
 void 
 color_classify (
   float red,
@@ -264,97 +285,12 @@ void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v )
 void 
 print_color (color result, color second, certainty certainty_level) 
 {
-    switch (result) {
-        case BLACK:
-            printf("black ");
-            break;
-            
-        case WHITE:
-            printf("white ");
-            break;
-            
-        case RED:
-            printf("red ");
-            break;
-            
-        case GREEN:
-            printf("green ");
-            break;
-            
-        case BLUE:
-            printf("blue ");
-            break;
-            
-        case YELLOW:
-            printf("yellow ");
-            break;
-            
-        default:
-            printf("none ");
-            break;
-    }
-    
-    switch (second) {
-        case BLACK:
-            printf("black ");
-            break;
-            
-        case WHITE:
-            printf("white ");
-            break;
-            
-        case RED:
-            printf("red ");
-            break;
-            
-        case GREEN:
-            printf("green ");
-            break;
-            
-        case BLUE:
-            printf("blue ");
-            break;
-            
-        case YELLOW:
-            printf("yellow ");
-            break;
+  assert(result < num_colors);
+  printf("%s ", color_name[result]);
 
-        case BLUE_GREEN:
-            printf("blue-green ");
-            break;
-            
-        case PURPLE_PINK_LAVENDER:
-            printf("purple-pink-lavender ");
-            break;
-            
-        case PURPLE_PINK_MAGENTA:
-            printf("purple-pink-magenta ");
-            break;
-            
-        case GRAY:
-            printf("gray ");
-            break;
-            
-        default:
-            printf("none ");
-            break;
-    }
+  assert(second < num_colors);
+  printf("%s ", color_name[second]);
     
-    switch (certainty_level) {
-        case CERTAIN:
-            printf("certain\n");
-            break;
-            
-        case GOOD_GUESS:
-            printf("good-guess\n");
-            break;
-            
-        case UNRELIABLE:
-            printf("unreliable\n");
-            break;
-            
-        default:
-            printf("error\n");
-            break;
-    }
+  assert(certainty_level < 3);
+  printf("%s\n", certainty_name[certainty_level]);
 }

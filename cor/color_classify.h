@@ -5,9 +5,13 @@
 //  Created by Fernando Gorodscy on 11-11-03 based on code from Ricardo Fabbri
 //
 
-#ifndef color_classify_cmd_color_classify_h
-#define color_classify_cmd_color_classify_h
+#ifndef color_classify_h
+#define color_classify_h
 
+#include <assert.h>
+
+
+#define num_colors 11
 
 typedef enum {
  BLACK = 0,
@@ -20,8 +24,10 @@ typedef enum {
  PURPLE_PINK_LAVENDER = 7,
  PURPLE_PINK_MAGENTA = 8,
  GRAY = 9,
- NONE = 10} color;
-typedef enum {UNRELIABLE = 0,
+ NONE } color;
+
+typedef enum {
+ UNRELIABLE = 0,
  GOOD_GUESS = 1,
  CERTAIN = 2} certainty;
 
