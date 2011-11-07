@@ -3,6 +3,7 @@
 */
 
 #include "m_pd.h"
+#include "color_classify.h"
 
 /* the data structure for each copy of "colordetect".  In this case we
 on;y need pd's obligatory header (of type t_object). */
@@ -17,6 +18,106 @@ static t_class *colordetect_class;
 
 /*----------------------------------------------------------------------*/
 
+void 
+print_color_pd (color result, color second, certainty certainty_level) 
+{
+    switch (result) {
+        case BLACK:
+            post("black ");
+            break;
+            
+        case WHITE:
+            post("white ");
+            break;
+            
+        case RED:
+            post("red ");
+            break;
+            
+        case GREEN:
+            post("green ");
+            break;
+            
+        case BLUE:
+            post("blue ");
+            break;
+            
+        case YELLOW:
+            post("yellow ");
+            break;
+            
+        default:
+            post("none ");
+            break;
+    }
+    
+    switch (second) {
+        case BLACK:
+            post("black ");
+            break;
+            
+        case WHITE:
+            post("white ");
+            break;
+            
+        case RED:
+            post("red ");
+            break;
+            
+        case GREEN:
+            post("green ");
+            break;
+            
+        case BLUE:
+            post("blue ");
+            break;
+            
+        case YELLOW:
+            post("yellow ");
+            break;
+
+        case BLUE_GREEN:
+            post("blue-green ");
+            break;
+            
+        case PURPLE_PINK_LAVENDER:
+            post("purple-pink-lavender ");
+            break;
+            
+        case PURPLE_PINK_MAGENTA:
+            post("purple-pink-magenta ");
+            break;
+            
+        case GRAY:
+            post("gray ");
+            break;
+            
+        default:
+            post("none ");
+            break;
+    }
+    
+    switch (certainty_level) {
+        case CERTAIN:
+            post("certain\n");
+            break;
+            
+        case GOOD_GUESS:
+            post("good-guess\n");
+            break;
+            
+        case UNRELIABLE:
+            post("unreliable\n");
+            break;
+            
+        default:
+            post("error\n");
+            break;
+    }
+}
+
+/*----------------------------------------------------------------------*/
+
 static void 
 colordetect_list(t_colordetect *this, t_symbol *s, int argc, t_atom *argv)
 {
@@ -24,7 +125,15 @@ colordetect_list(t_colordetect *this, t_symbol *s, int argc, t_atom *argv)
     t_float r = atom_getfloat(&argv[0]);
     t_float g = atom_getfloat(&argv[1]);
     t_float b = atom_getfloat(&argv[2]);
-    post("got rgb: %g%g%g", r, g, b);
+
+    color result, second_guess;
+    certainty c;
+
+    color_classify (r, g, b, &result, &second_guess, &c);
+    // do a switch like in _cmd to output the right message/symbol.
+    // if good guess, bang the second outlet
+    // if uncertain, bang the third outlet
+    print_color_pd(result, second_guess, c);
   }
 }
 

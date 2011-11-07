@@ -6,7 +6,9 @@ LIBRARY_NAME = cor
 # add your .c source files, one object per file, to the SOURCES
 # variable, help files will be included automatically, and for GUI
 # objects, the matching .tcl file too
-SOURCES =  colordetect.c mycobject.c
+SOURCES =  colordetect.c mycobject.c 
+
+HEADERS = color_classify.h
 
 # list all pd objects (i.e. myobject.pd) files here, and their helpfiles will
 # be included automatically
@@ -241,7 +243,7 @@ SHARED_TCL_LIB = $(wildcard lib$(LIBRARY_NAME).tcl)
 
 all: $(SOURCES:.c=.$(EXTENSION)) $(SHARED_LIB) color_classify_cmd 
 
-%.o: %.c
+%.o: %.c $(HEADERS)
 	$(CC) $(ALL_CFLAGS) -o "$*.o" -c "$*.c"
 
 %.$(EXTENSION): %.o $(SHARED_LIB)
@@ -259,6 +261,10 @@ $(SHARED_LIB): $(SHARED_SOURCE:.c=.o)
 color_classify_cmd: color_classify_cmd.o color_classify.o
 
 color_classify.o: color_classify.c color_classify.h
+
+colordetect.$(EXTENSION): colordetect.o color_classify.o $(SHARED_LIB)
+	$(CC) $(ALL_LDFLAGS) -o "colordetect.$(EXTENSION)" colordetect.o color_classify.o  $(ALL_LIBS) $(SHARED_LIB)
+	chmod a-x "colordetect.$(EXTENSION)"
 
 
 install: libdir_install

@@ -15,4 +15,5 @@ void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v );
 void color_classify (float red, float green, float blue, color *result, color *second_guess, certainty *sure);
 void print_color (color result, color second, certainty certainty_level);
 
+
 #endif

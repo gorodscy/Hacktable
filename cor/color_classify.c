@@ -4,7 +4,14 @@
 static float MAX (float a, float b, float c);
 static float MIN (float a, float b, float c);
 
-void color_classify (float red, float green, float blue, color *result, color *second_guess, certainty *certainty_level)
+void 
+color_classify (
+  float red,
+  float green,
+  float blue,
+  color *result,
+  color *second_guess,
+  certainty *certainty_level)
 {
     float hue;
     float sat;
@@ -252,4 +259,102 @@ void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v )
     *h *= 60;
     if( *h < 0 )
         *h += 360;
+}
+
+void 
+print_color (color result, color second, certainty certainty_level) 
+{
+    switch (result) {
+        case BLACK:
+            printf("black ");
+            break;
+            
+        case WHITE:
+            printf("white ");
+            break;
+            
+        case RED:
+            printf("red ");
+            break;
+            
+        case GREEN:
+            printf("green ");
+            break;
+            
+        case BLUE:
+            printf("blue ");
+            break;
+            
+        case YELLOW:
+            printf("yellow ");
+            break;
+            
+        default:
+            printf("none ");
+            break;
+    }
+    
+    switch (second) {
+        case BLACK:
+            printf("black ");
+            break;
+            
+        case WHITE:
+            printf("white ");
+            break;
+            
+        case RED:
+            printf("red ");
+            break;
+            
+        case GREEN:
+            printf("green ");
+            break;
+            
+        case BLUE:
+            printf("blue ");
+            break;
+            
+        case YELLOW:
+            printf("yellow ");
+            break;
+
+        case BLUE_GREEN:
+            printf("blue-green ");
+            break;
+            
+        case PURPLE_PINK_LAVENDER:
+            printf("purple-pink-lavender ");
+            break;
+            
+        case PURPLE_PINK_MAGENTA:
+            printf("purple-pink-magenta ");
+            break;
+            
+        case GRAY:
+            printf("gray ");
+            break;
+            
+        default:
+            printf("none ");
+            break;
+    }
+    
+    switch (certainty_level) {
+        case CERTAIN:
+            printf("certain\n");
+            break;
+            
+        case GOOD_GUESS:
+            printf("good-guess\n");
+            break;
+            
+        case UNRELIABLE:
+            printf("unreliable\n");
+            break;
+            
+        default:
+            printf("error\n");
+            break;
+    }
 }
