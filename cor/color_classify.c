@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include "color_classify.h"
 
+static float MAX (float a, float b, float c);
+static float MIN (float a, float b, float c);
+
 void color_classify (float red, float green, float blue, color *result, color *second_guess, certainty *certainty_level)
 {
     float hue;
@@ -93,7 +96,7 @@ void color_classify (float red, float green, float blue, color *result, color *s
         }
         else {
             *result = RED;
-            if ((sat < 0.3 && val < 0.6) | (sat < 0.4 & val < 0.35)) {
+            if ((sat < 0.3 && val < 0.6) || (sat < 0.4 && val < 0.35)) {
                 if (*certainty_level == CERTAIN) {
                     *certainty_level = GOOD_GUESS;
                 }
