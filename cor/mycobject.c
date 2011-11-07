@@ -7,7 +7,7 @@ numbers, and "rats", and just prints something out for each message. */
     on;y need pd's obligatory header (of type t_object). */
 typedef struct mycobject
 {
-  t_object x_ob;
+  t_object x_obj;
 } t_mycobject;
 
     /* this is called back when mycobject gets a "float" message (i.e., a

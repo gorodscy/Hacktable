@@ -8,8 +8,22 @@
 #ifndef color_classify_cmd_color_classify_h
 #define color_classify_cmd_color_classify_h
 
-typedef enum {BLACK, WHITE, RED, GREEN, BLUE, YELLOW, BLUE_GREEN, PURPLE_PINK_LAVENDER, PURPLE_PINK_MAGENTA, GRAY, NONE} color;
-typedef enum {UNRELIABLE, GOOD_GUESS, CERTAIN} certainty;
+
+typedef enum {
+ BLACK = 0,
+ WHITE = 1,
+ RED   = 2,
+ GREEN = 3,
+ BLUE  = 4,
+ YELLOW = 5,
+ BLUE_GREEN = 6,
+ PURPLE_PINK_LAVENDER = 7,
+ PURPLE_PINK_MAGENTA = 8,
+ GRAY = 9,
+ NONE = 10} color;
+typedef enum {UNRELIABLE = 0,
+ GOOD_GUESS = 1,
+ CERTAIN = 2} certainty;
 
 void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v );
 void color_classify (float red, float green, float blue, color *result, color *second_guess, certainty *sure);

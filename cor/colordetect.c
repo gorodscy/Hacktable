@@ -9,7 +9,7 @@
 on;y need pd's obligatory header (of type t_object). */
 typedef struct colordetect
 {
-  t_object x_ob;
+  t_object x_obj;
 } t_colordetect;
 
 /* this is a pointer to the class for "colordetect", which is created in the
@@ -133,6 +133,7 @@ colordetect_list(t_colordetect *this, t_symbol *s, int argc, t_atom *argv)
     // do a switch like in _cmd to output the right message/symbol.
     // if good guess, bang the second outlet
     // if uncertain, bang the third outlet
+    outlet_float(this->x_obj.ob_outlet, (t_float)result);
     print_color_pd(result, second_guess, c);
   }
 }
@@ -141,9 +142,12 @@ colordetect_list(t_colordetect *this, t_symbol *s, int argc, t_atom *argv)
 static void *
 colordetect_new(void)
 {
-    t_colordetect *x = (t_colordetect *)pd_new(colordetect_class);
     // xx TODO new outlet 
     post("colordetect_new");
+    t_colordetect *x = (t_colordetect *)pd_new(colordetect_class);
+
+    outlet_new(&x->x_obj, &s_float);
+
     return (void *)x;
 }
 
