@@ -10,6 +10,9 @@ on;y need pd's obligatory header (of type t_object). */
 typedef struct colordetect
 {
   t_object x_obj;
+  t_outlet *result_outlet;
+  t_outlet *certainty_outlet;
+  t_outlet *second_guess_outlet;
 } t_colordetect;
 
 /* this is a pointer to the class for "colordetect", which is created in the
@@ -45,11 +48,10 @@ colordetect_list(t_colordetect *this, t_symbol *s, int argc, t_atom *argv)
     color result, second_guess;
     certainty c;
 
-    color_classify (r, g, b, &result, &second_guess, &c);
-    // do a switch like in _cmd to output the right message/symbol.
-    // if good guess, bang the second outlet
-    // if uncertain, bang the third outlet
-    outlet_float(this->x_obj.ob_outlet, (t_float)result);
+    color_classify(r, g, b, &result, &second_guess, &c);
+    outlet_float(this->result_outlet, (t_float)result);
+    outlet_float(this->second_guess_outlet, (t_float)second_guess);
+    outlet_float(this->certainty_outlet, (t_float)c);
     print_color_pd(result, second_guess, c);
   }
 }
@@ -62,8 +64,11 @@ colordetect_new(void)
     post("colordetect_new");
     t_colordetect *x = (t_colordetect *)pd_new(colordetect_class);
 
-    outlet_new(&x->x_obj, &s_float);
+    x->result_outlet = outlet_new(&x->x_obj, &s_float);
+    x->second_guess_outlet = outlet_new(&x->x_obj, &s_float);
+    x->certainty_outlet = outlet_new(&x->x_obj, &s_float);
 
+    // Note: uncertain = (!certain && !good-guess)
     return (void *)x;
 }
 
