@@ -44,7 +44,7 @@ color_classify (
     rgb2hsv(red, green, blue, &hue, &sat, &val);
     hue *= 360;
 
-    printf("%g, %g, %g\n", hue, sat, val);
+    //fprintf(stderr, "%g, %g, %g\n", hue, sat, val);
     
     if (val < 0.3) {
         if (sat > 0.3 && val > 0.2) {
