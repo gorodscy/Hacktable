@@ -1,4 +1,4 @@
-function [label, certainty_level, confidence, secondary_label] = color_classify_c(RGB, method)
+function [label, certainty_level, confidence, secondary_label] = color_classify_single_c(RGB, method)
   method = 'hsv_sip';
 
   RGB = string(RGB);
