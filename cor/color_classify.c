@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include "color_classify.h"
 
-static float MAX (float a, float b, float c);
-static float MIN (float a, float b, float c);
+static void rgb2hsv(float r, float g, float b, float *h, float *s, float *v);
 
 char *color_name[num_colors]  = {
   "black",
@@ -42,7 +41,10 @@ color_classify (
     *result = NONE;
     *second_guess = NONE;
     
-    RGBtoHSV(red, green, blue, &hue, &sat, &val);
+    rgb2hsv(red, green, blue, &hue, &sat, &val);
+    hue *= 360;
+
+    printf("%g, %g, %g\n", hue, sat, val);
     
     if (val < 0.3) {
         if (sat > 0.3 && val > 0.2) {
@@ -50,25 +52,21 @@ color_classify (
             if (sat > 0.6 && (hue >= 65 && hue <= 170)) {
                 *result = GREEN;
                 return;
-            } 
-            else if (sat > 0.8) {
+            } else if (sat > 0.8) {
                 *certainty_level = UNRELIABLE;
-            } 
-            else {
+            } else {
                 *certainty_level = GOOD_GUESS;
             }
             // will proceed below to guessing colors
-        }
-        else {
+        } else {
             *result = BLACK;
             return;
         }
-    }
-    else if ((val > 0.8 && sat < 0.2) || (val > 0.7 && sat < 0.1) || (val > 0.6 && sat < 0.05)) {
+    } else if ((val > 0.8 && sat < 0.2) || (val > 0.7 && sat < 0.1) || (val > 0.6 && sat < 0.05)) {
         *result = WHITE;
         if (sat > 0.1) {
             // light baby colors; could be white with offset colorbalance.
-            certainty_level = UNRELIABLE;
+            *certainty_level = UNRELIABLE;
             // will proceed below to guessing colors
             *result = NONE;
             *second_guess = WHITE;
@@ -81,13 +79,14 @@ color_classify (
             return;
         }
     }
-    else if ((val < 0.65 && sat < 0.15) || (val < 0.7 && sat < 0.1) || (val < 0.5 && sat < 0.3 && (hue < 40 && hue > 10))) { // heuristica ~ marrons
+    else if ((val < 0.65 && sat < 0.15) || 
+        (val < 0.7 && sat < 0.1) || 
+        (val < 0.5 && sat < 0.3 && (hue < 40 && hue > 10))) { // heuristica ~ marrons
         if (val < 0.50) {
             *result = BLACK;
             *certainty_level = GOOD_GUESS;
-            if (val > 0.40) {
+            if (val > 0.40)
                 *second_guess = GRAY;
-            }
             return;
         }
         else {
@@ -224,63 +223,49 @@ color_classify (
     return;
 }
 
-float MAX (float a, float b, float c)
+// Code from AnImaL animal.sf.net
+// 0 <= r, g, b, h, s, v <= 1
+void 
+rgb2hsv(float r, float g, float b, float *h, float *s, float *v)
 {
-    if (a > b) {
-        if (a > c) {
-            return a;
-        } else {
-            return c;
-        }
-    } else if (b > c) {
-        return b;
-    } else {
-        return c;
-    }
+   float max, min, delta;
+
+   if (r > g) {
+      max = r;
+      min = g;
+   } else  {
+      max = g;
+      min = r;
+   }
+
+   if (max < b) 
+      max = b;
+   else if (min > b)
+      min = b;
+    
+   delta = max - min;
+
+   *v = max;
+   if (max != 0.0)
+     *s = delta / max;
+   else
+     *s = 0.0;
+
+   if (*s == 0.0) *h = -1;
+   else {
+     if (r == max)
+       *h = (g - b) / delta;
+     else if (g == max)
+       *h = 2 + (b - r) / delta;
+     else if (b == max)
+       *h = 4 + (r - g) / delta;
+     *h *= 60.0;
+     if (*h < 0) *h += 360.0;
+     *h /= 360.0;
+   }
 }
 
-float MIN (float a, float b, float c)
-{
-    if (a < b) {
-        if (a < c) {
-            return a;
-        } else {
-            return c;
-        }
-    } else if (b < c) {
-        return b;
-    } else {
-        return c;
-    }
-}
 
-// 0 <= r, g, b, s, v <= 1
-// 0 < h < 360
-void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v ) 
-{
-    float min, max, delta;
-    min = MIN( r, g, b );
-    max = MAX( r, g, b );
-    *v = max;
-    delta = max - min;
-    if( max != 0 )
-        *s = delta / max;
-    else {
-        // r = g = b = 0
-        *s = 0;
-        *h = -1;
-        return;
-    }
-    if( r == max )
-        *h = ( g - b ) / delta;
-    else if( g == max )
-        *h=2+(b-r)/delta;
-    else 
-        *h=4+(r-g)/delta; 
-    *h *= 60;
-    if( *h < 0 )
-        *h += 360;
-}
 
 void 
 print_color (color result, color second, certainty certainty_level) 

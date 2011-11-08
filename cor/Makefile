@@ -154,7 +154,8 @@ ifeq ($(UNAME),Linux)
   SHARED_EXTENSION = so
   OS = linux
   PD_PATH = /usr
-  OPT_CFLAGS = -O6 -funroll-loops -fomit-frame-pointer
+#  OPT_CFLAGS = -O6 -funroll-loops -fomit-frame-pointer
+	OPT_CFLAGS = -g
   ALL_CFLAGS += -fPIC
   ALL_LDFLAGS += -rdynamic -shared -fPIC -Wl,-rpath,"\$$ORIGIN",--enable-new-dtags
   SHARED_LDFLAGS += -Wl,-soname,$(SHARED_LIB) -shared
@@ -193,38 +194,6 @@ ifeq ($(UNAME),GNU/kFreeBSD)
   ALL_LIBS += -lc $(LIBS_linux)
   STRIP = strip --strip-unneeded -R .note -R .comment
   DISTBINDIR=$(DISTDIR)-$(OS)-$(shell uname -m)
-endif
-ifeq (CYGWIN,$(findstring CYGWIN,$(UNAME)))
-  CPU := $(shell uname -m)
-  SOURCES += $(SOURCES_cygwin)
-  EXTENSION = dll
-  SHARED_EXTENSION = dll
-  OS = cygwin
-  PD_PATH = $(shell cygpath $$PROGRAMFILES)/pd
-  OPT_CFLAGS = -O6 -funroll-loops -fomit-frame-pointer
-  ALL_CFLAGS += 
-  ALL_LDFLAGS += -rdynamic -shared -L"$(PD_PATH)/src" -L"$(PD_PATH)/bin"
-  SHARED_LDFLAGS += -shared -Wl,-soname,$(SHARED_LIB)
-  ALL_LIBS += -lc -lpd $(LIBS_cygwin)
-  STRIP = strip --strip-unneeded -R .note -R .comment
-  DISTBINDIR=$(DISTDIR)-$(OS)
-endif
-ifeq (MINGW,$(findstring MINGW,$(UNAME)))
-  CPU := $(shell uname -m)
-  SOURCES += $(SOURCES_windows)
-  EXTENSION = dll
-  SHARED_EXTENSION = dll
-  OS = windows
-  PD_PATH = $(shell cd "$$PROGRAMFILES/pd" && pwd)
-  # MinGW doesn't seem to include cc so force gcc
-  CC=gcc
-  OPT_CFLAGS = -O3 -funroll-loops -fomit-frame-pointer
-  ALL_CFLAGS += -mms-bitfields
-  ALL_LDFLAGS += -s -shared -Wl,--enable-auto-import -L"$(PD_PATH)/src" -L"$(PD_PATH)/bin" -L"$(PD_PATH)/obj"
-  SHARED_LDFLAGS += -shared
-  ALL_LIBS += -lpd -lwsock32 -lkernel32 -luser32 -lgdi32 $(LIBS_windows)
-  STRIP = strip --strip-unneeded -R .note -R .comment
-  DISTBINDIR=$(DISTDIR)-$(OS)
 endif
 
 # in case somebody manually set the HELPPATCHES above

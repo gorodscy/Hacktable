@@ -50,8 +50,9 @@ for i=1:nimgs
 
 
   if has_medians
+    medians(i,:)
     [class, certainty, confidence, secondary_class] =...
-      color_classify_single(medians(i,:),method);
+      color_classify_single_c(medians(i,:),method);
   else
     im = imread(fs(i));
     [class, certainty, confidence, secondary_class] =...
