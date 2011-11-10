@@ -47,7 +47,7 @@ ALL_LIBS =
 #------------------------------------------------------------------------------#
 
 # these can be set from outside without (usually) breaking the build
-CFLAGS = -Wall -W -g
+CFLAGS = -Wall -W
 LDFLAGS =
 LIBS =
 
@@ -154,8 +154,8 @@ ifeq ($(UNAME),Linux)
   SHARED_EXTENSION = so
   OS = linux
   PD_PATH = /usr
-#  OPT_CFLAGS = -O6 -funroll-loops -fomit-frame-pointer
-	OPT_CFLAGS = -g
+  OPT_CFLAGS = -O6 -funroll-loops -fomit-frame-pointer
+#	OPT_CFLAGS = -g
   ALL_CFLAGS += -fPIC
   ALL_LDFLAGS += -rdynamic -shared -fPIC -Wl,-rpath,"\$$ORIGIN",--enable-new-dtags
   SHARED_LDFLAGS += -Wl,-soname,$(SHARED_LIB) -shared

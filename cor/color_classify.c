@@ -24,6 +24,51 @@ char *certainty_name[3] =  {
   "certain"
 };
 
+// the rgb values for the pure representative of each class, mainly for
+// visualization purposes 
+float class_red[] = {
+0,/*black,*/
+1,/*white,*/
+1,/*red,*/
+0,/*green,*/
+0,/*blue,*/
+1,/*yellow,*/
+0,/*blue-green,*/
+170/255,/*purple-pink-lavender,*/
+1,/*purple-pink-magenta,*/
+0.5,/*gray,*/
+154/255,/*none ~ brownish for visualization only */
+};
+
+float class_green[] = {
+0,/*black,*/
+1,/*white,*/
+1,/*red,*/
+0,/*green,*/
+0,/*blue,*/
+1,/*yellow,*/
+235/255,/*blue-green,*/
+0,/*purple-pink-lavender,*/
+0,/*purple-pink-magenta,*/
+0.5,/*gray,*/
+115/255/*none*/
+};
+
+float class_blue[] = {
+0,/*black,*/
+1,/*white,*/
+1,/*red,*/
+0,/*green,*/
+0,/*blue,*/
+1,/*yellow,*/
+217/255,/*blue-green,*/
+1,/*purple-pink-lavender,*/
+1,/*purple-pink-magenta,*/
+0.5,/*gray,*/
+86/255/*none*/
+};
+
+
 void 
 color_classify (
   float red,
@@ -257,7 +302,7 @@ rgb2hsv(float r, float g, float b, float *h, float *s, float *v)
        *h = (g - b) / delta;
      else if (g == max)
        *h = 2 + (b - r) / delta;
-     else if (b == max)
+     else // if (b == max)
        *h = 4 + (r - g) / delta;
      *h *= 60.0;
      if (*h < 0) *h += 360.0;
