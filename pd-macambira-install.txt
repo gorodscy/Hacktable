@@ -1,0 +1,88 @@
+#Dependência
+sudo apt-get install -y autoconf automake libtool libfftw3-dev libsndfile1-dev liblua5.1-0-dev tcl8.5-dev swig ladspa-sdk libspeex-dev libmp3lame-dev libgl1-mesa-dev mesa-utils libglu1-mesa libglu1-mesa-dev libgsl0-dev tcllib cheese
+
+# Desinstale tudo que for pacote pure-data do ubuntu
+# sudo apt-get install synaptic
+# synaptic
+
+mkdir pd-repos
+cd pd-repos
+
+#Core do pd-extended
+git clone git://pure-data.git.sourceforge.net/gitroot/pure-data/pd-extended.git
+#***
+#pd-svn
+#git svn clone https://pure-data.svn.sourceforge.net/svnroot/pure-data/trunk pd-svn
+
+#pd-svn do repositório Macambira
+git clone git://github.com/rfabbri/pd-macambira.git
+
+#***
+#Gem do repositório
+#git clone git://pd-gem.git.sourceforge.net/gitroot/pd-gem/Gem gem.git
+
+#Gem do Lab Macambira
+git clone git://github.com/rfabbri/Gem.git gem.git
+#******
+
+cd pd-macambira/
+mv pd pd-original
+ln -s ../pd-extended pd
+
+
+ln -s ../gem.git Gem
+cd externals
+ln -s ../../gem.git Gem
+
+cd .. 
+# dentro do pd-macambira
+cd packages/linux_make
+make install && make package
+
+sudo dpkg -i Pd-*.deb
+
+Depois de tudo
+
+# vai ao pd-repos
+cd ../../../
+
+# clona a AirHackTable
+git clone git://github.com/wakku/Hacktable.git hacktable
+
+#atualizar
+#git pull
+
+# pega deteccao de cor
+cd gem.git
+git checkout remotes/origin/color
+git checkout -b color
+
+#repetir
+cd packages/linux_make
+make install && make package
+
+sudo dpkg -i Pd-*.deb
+
+
+#para atualizar
+#PD-Macambira/pd-macambira/externals/Gem
+#make
+#PD-Macambira/pd-macambira/externals
+#make gem_install
+
+#após instalar algo novo no sistema que seja necessário remover o pd
+sudo mv /usr/lib/pd-extended/extra/Gem /usr/lib/pd-extended/extra/Gem-original
+cd ~/pd-repos/pd-macambira/externals/build/lib/pd-extended/extra/Gem
+sudo ln -s $PWD /usr/lib/pd-extended/extra/Gem
+make
+# vai ao pd-repos/pd-macambira/externals
+cd .. 
+make gem_install
+
+# adiciona usuario ao grupo video
+sudo gpasswd -a [user] video
+
+#Não usar!!!
+
+#Pré requisitos velhos
+sudo apt-get install git-svn
