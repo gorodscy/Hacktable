@@ -41,7 +41,7 @@ make install && make package
 
 sudo dpkg -i Pd-*.deb
 
-Depois de tudo
+#Depois de tudo
 
 # vai ao pd-repos
 cd ../../../
@@ -85,4 +85,4 @@ sudo gpasswd -a [user] video
 #Não usar!!!
 
 #Pré requisitos velhos
-sudo apt-get install git-svn
+#sudo apt-get install git-svn
