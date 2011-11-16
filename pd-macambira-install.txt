@@ -82,6 +82,15 @@ make gem_install
 # adiciona usuario ao grupo video
 sudo gpasswd -a [user] video
 
+# repositorio de utilitario
+git clone git@github.com:rfabbri/pd-macambira-utils.git
+
+# repositorio de coisas diversas do gilson beck
+
+git clone https://github.com/gilsonbeck/beck-repo.git
+
+
+
 #Não usar!!!
 
 #Pré requisitos velhos
