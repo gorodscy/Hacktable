@@ -1,0 +1,65 @@
+http://createdigitalmotion.com/2009/08/trick-out-your-ps3-eye-webcam-best-cam-for-vision-augmented-reality
+
+/usr/src/linux-headers-3.0.0-12-generic/include/config/usb/gspca
+/home/rfabbri/src/linux-source-3.0.0/Documentation/video4linux/
+
+http://nuigroup.com/forums/viewthread/4079/
+
+Instalar guvcview from source
+Instalar v4l from source
+
+
+
+1. sudo apt-get install guvcview mercurial
+2. hg clone -r ee9826bc7106 http://linuxtv.org/hg/v4l-dvb # this gives you a version of v4l-dvb before the changes to ir which are flagging an error but still after the patches to the ps3 driver.
+3. make # do make -j2 for dual core processors, -j4 for quad core
+
+4. sed -i 's/CONFIG_DVB_FIREDTV=m/CONFIG_DVB_FIREDTV=n/' ./v4l/.config
+5. make # will make without firedtv. use -j2 or -j4 again if appropriate
+6. sudo make install
+
+now check to see if you have the right gspca-ov534 driver:
+7. modinfo gspca-ov534
+and if that appears right, unload the old and load the new:
+8. modprobe -r gspca-ov534
+9. modprobe gspca-ov534
+
+Updated list
+
+1. sudo apt-get install guvcview mercurial
+2. hg clone -r ee9826bc7106 http://linuxtv.org/hg/v4l-dvb # this gives you a version of v4l-dvb before the changes to ir which are flagging an error but still after the patches to the ps3 driver
+2.5 cd v4l-dvb
+3. make # do make -j2 for dual core processors, -j4 for quad core
+
+at this point the make will flag an error about firedtv or something like that. However, it will also have created the .config file we can now change so that firedtv is no longer built:
+
+4. sed -i 's/CONFIG_DVB_FIREDTV=m/CONFIG_DVB_FIREDTV=n/' ./v4l/.config
+5. make # will make without firedtv. use -j2 or -j4 again if appropriate
+6. sudo make install
+
+now check to see if you have the right gspca-ov534 driver:
+7. modinfo gspca-ov534
+and if that appears right, unload the old and load the new:
+8. sudo modprobe -r gspca-ov534
+9. sudo modprobe gspca-ov534
+
+===============
+v4l source
+
+1 - cd
+2 - wget http://linuxtv.org/hg/v4l-dvb/archive/tip.tar.bz2
+3 - tar xjf tip.tar.bz2
+4 - cd v4l.........
+5 - echo > ./linux/drivers/media/dvb/firewire/Makefile
+6 - make
+7 - make install (as root or use sudo)
+
+
+“sudo modprobe gspca_ov534 videomode=04.”
+
+
+OTHERS
+
+http://nuigroup.com/forums/viewthread/13140/#67316
+
+https://sourceforge.net/projects/eviacam/develop
