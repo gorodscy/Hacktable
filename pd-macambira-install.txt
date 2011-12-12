@@ -58,6 +58,9 @@ git checkout remotes/origin/color
 git checkout -b color
 
 #repetir
+#adicionei aqui. É preciso testar.
+cd ..
+cd pd-macambira
 cd packages/linux_make
 make install && make package
 
