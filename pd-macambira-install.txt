@@ -1,6 +1,9 @@
 #Dependência
 sudo apt-get install -y autoconf automake libtool libfftw3-dev libsndfile1-dev liblua5.1-0-dev tcl8.5-dev swig ladspa-sdk libspeex-dev libmp3lame-dev libgl1-mesa-dev mesa-utils libglu1-mesa libglu1-mesa-dev libgsl0-dev tcllib cheese
 
+#dependências para o som - extra
+sudo apt-get install -y autoconf automake qjackctl
+
 # Desinstale tudo que for pacote pure-data do ubuntu
 # sudo apt-get install synaptic
 # synaptic
