@@ -1,5 +1,8 @@
-#Dependência
-sudo apt-get install -y autoconf automake libtool libfftw3-dev libsndfile1-dev liblua5.1-0-dev tcl8.5-dev swig ladspa-sdk libspeex-dev libmp3lame-dev libgl1-mesa-dev mesa-utils libglu1-mesa libglu1-mesa-dev libgsl0-dev tcllib cheese
+# Dependência
+sudo apt-get install -y autoconf automake libtool libfftw3-dev libsndfile1-dev liblua5.1-0-dev tcl8.5-dev swig ladspa-sdk libspeex-dev libmp3lame-dev libgl1-mesa-dev mesa-utils libglu1-mesa libglu1-mesa-dev libgsl0-dev tcllib cheese libasound2-dev
+
+# Pré requisitos se quiser obter repos oficiais
+# sudo apt-get install git-svn
 
 #dependências para o som - extra
 sudo apt-get install -y autoconf automake qjackctl
@@ -11,22 +14,22 @@ sudo apt-get install -y autoconf automake qjackctl
 mkdir pd-repos
 cd pd-repos
 
-#Core do pd-extended
+# Core do pd-extended
 git clone git://pure-data.git.sourceforge.net/gitroot/pure-data/pd-extended.git
-#***
-#pd-svn
-#git svn clone https://pure-data.svn.sourceforge.net/svnroot/pure-data/trunk pd-svn
-
-#pd-svn do repositório Macambira
+# ***
+# pd-svn
+# git svn clone https://pure-data.svn.sourceforge.net/svnroot/pure-data/trunk pd-svn
+ 
+# pd-svn do repositório Macambira
 git clone git://github.com/rfabbri/pd-macambira.git
 
-#***
-#Gem do repositório
-#git clone git://pd-gem.git.sourceforge.net/gitroot/pd-gem/Gem gem.git
+# ***
+# Gem do repositório
+# git clone git://pd-gem.git.sourceforge.net/gitroot/pd-gem/Gem gem.git
 
-#Gem do Lab Macambira
+# Gem do Lab Macambira
 git clone git://github.com/rfabbri/Gem.git gem.git
-#******
+# ******
 
 cd pd-macambira/
 mv pd pd-original
@@ -44,7 +47,7 @@ make install && make package
 
 sudo dpkg -i Pd-*.deb
 
-#Depois de tudo
+# Depois de tudo
 
 # vai ao pd-repos
 cd ../../../
@@ -52,31 +55,30 @@ cd ../../../
 # clona a AirHackTable
 git clone git://github.com/wakku/Hacktable.git hacktable
 
-#atualizar
-#git pull
+# atualizar
+# git pull
 
-# pega deteccao de cor
+# pega deteccao de cor (branch hacktable)
 cd gem.git
-git checkout remotes/origin/color
-git checkout -b color
+git checkout remotes/origin/hacktable
+git checkout -b hacktable
 
-#repetir
-#adicionei aqui. É preciso testar.
+# repetir
+# adicionei aqui. É preciso testar.
 cd ..
 cd pd-macambira
 cd packages/linux_make
 make install && make package
 
+# desinstalar todos os pacotes puredata e gem que vem com o ubuntu
+
+# instalar o novo pacote
 sudo dpkg -i Pd-*.deb
 
 
-#para atualizar
-#PD-Macambira/pd-macambira/externals/Gem
-#make
-#PD-Macambira/pd-macambira/externals
-#make gem_install
+# para atualizar
 
-#após instalar algo novo no sistema que seja necessário remover o pd
+# Caso seja necessário dar um update no Gem apenas
 sudo mv /usr/lib/pd-extended/extra/Gem /usr/lib/pd-extended/extra/Gem-original
 cd ~/pd-repos/pd-macambira/externals/build/lib/pd-extended/extra/Gem
 sudo ln -s $PWD /usr/lib/pd-extended/extra/Gem
@@ -96,8 +98,3 @@ git clone git@github.com:rfabbri/pd-macambira-utils.git
 git clone https://github.com/gilsonbeck/beck-repo.git
 
 
-
-#Não usar!!!
-
-#Pré requisitos velhos
-#sudo apt-get install git-svn
