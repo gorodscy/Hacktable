@@ -38,11 +38,3 @@
 38,	aquoso_feminino1.wav			1208473	96	area38;
 39,	gongo_grave+phase_voconder-mono.wav	1256816	96	area39;
 40, 	castanholas-mono.wav			2482292	44.1	area40;
-41,	passaros.wav				5535847	44.1	area41;
-42,	igreja-passaros.wav			2490235	44.1	area42;
-43,	Fazenda.wav				5541748	44.1	area43;
-44,	selva-sapos.wav				7960742	44.1	area44;
-45, 	pedras1.wav				4821020	44.1	area45;
-46,	pedras-ruido.wav			3936256	44.1	area46;
-
-
