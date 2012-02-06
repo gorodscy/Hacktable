@@ -1,0 +1,24 @@
+#N canvas 479 569 652 473 10;
+#X obj 169 196 x11key;
+#X msg 80 107 keysym Left 1;
+#X msg 214 101 keysym Left 0;
+#X msg 82 135 keysym Right 0;
+#X msg 214 155 keysym Right 1;
+#X obj 138 56 moses 50;
+#X obj 238 64 print;
+#X obj 135 -51 hsl 128 15 0 100 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X text 159 -23 move pro canto esquerdo e isso vai emitir "left" move
+pro canto direito e isso vai emitir "right" mude o foco para um joguinho
+e veras o Pd controlando o jogo;
+#X connect 1 0 0 0;
+#X connect 2 0 0 0;
+#X connect 3 0 0 0;
+#X connect 4 0 0 0;
+#X connect 5 0 3 0;
+#X connect 5 0 1 0;
+#X connect 5 0 6 0;
+#X connect 5 1 2 0;
+#X connect 5 1 4 0;
+#X connect 5 1 6 0;
+#X connect 7 0 5 0;
