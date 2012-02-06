@@ -1,4 +1,4 @@
-#N canvas 126 431 782 587 10;
+#N canvas 84 451 782 587 10;
 #X obj 345 17 inlet;
 #X obj 312 122 inlet;
 #X text 302 104 matrix;
@@ -12,7 +12,7 @@
 #X obj 420 119 sel 0;
 #X msg 420 146 0;
 #X msg 447 166 1;
-#N canvas 698 494 850 633 showblob2-\$0 1;
+#N canvas 698 494 850 633 showblob2-\$0 0;
 #X obj 220 154 inlet blobinformation;
 #X obj 159 240 unpack 0 0 0 0 0 0 0 0;
 #X obj 159 269 outlet weightedX;
@@ -158,7 +158,8 @@
 #X msg 335 169 1;
 #X connect 0 0 5 0;
 #X connect 1 0 15 0;
-#X connect 5 1 16 0;
+#X connect 5 0 16 0;
+#X connect 5 1 13 1;
 #X connect 5 2 10 0;
 #X connect 10 0 11 0;
 #X connect 10 1 12 0;

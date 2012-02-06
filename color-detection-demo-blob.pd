@@ -1,4 +1,4 @@
-#N canvas 0 54 1920 1146 10;
+#N canvas 448 212 713 695 10;
 #X declare -lib iemmatrix;
 #X obj 357 43 gemwin_control;
 #X obj -51 446 separator;
@@ -8,12 +8,12 @@
 #X text -78 423 Render source video;
 #X obj -49 509 square 4;
 #X obj 120 46 import iemmatrix;
-#X msg 146 110 device 1;
+#X msg 146 110 device 0;
 #N canvas 162 133 570 420 serin 0;
-#X obj 205 60 cnv 20 20 20 empty \$0-open-canvas 1 4 10 0 16 -233017
+#X obj 205 60 cnv 20 20 20 empty \$0-open-canvas 0 4 10 0 16 -233017
 -1 0;
 #X obj 60 61 hradio 18 1 1 8 empty empty empty 0 -6 0 8 -225271 -1
--1 1;
+-1 0;
 #X obj 60 13 inlet;
 #X msg 200 202 label \$1;
 #X obj 200 180 makefilename %d;
@@ -71,10 +71,10 @@
 #X msg 299 225 60;
 #X msg 211 227 50;
 #X text 31 332 Red;
-#X msg 121 285 255 255 255 0;
-#X msg 121 308 255 255 255 255;
 #X obj 70 383 pix_multiblob 6;
 #X obj 72 529 showobject2 1;
+#X msg 121 285 0 255 0 0;
+#X msg 121 308 0 255 0 255;
 #X obj 186 530 showobject2 2;
 #X connect 1 0 2 0;
 #X connect 2 0 13 0;
@@ -88,8 +88,8 @@
 #X connect 13 0 6 0;
 #X connect 14 0 35 0;
 #X connect 14 0 1 0;
-#X connect 15 0 45 0;
-#X connect 16 0 46 2;
+#X connect 15 0 43 0;
+#X connect 16 0 44 2;
 #X connect 16 0 47 2;
 #X connect 19 0 16 0;
 #X connect 20 0 14 0;
@@ -98,25 +98,25 @@
 #X connect 24 0 22 0;
 #X connect 26 0 27 0;
 #X connect 27 0 28 0;
-#X connect 28 0 45 0;
+#X connect 28 0 43 0;
 #X connect 29 0 30 0;
 #X connect 30 0 31 0;
-#X connect 31 0 45 0;
+#X connect 31 0 43 0;
 #X connect 35 0 15 0;
-#X connect 39 0 44 0;
+#X connect 39 0 46 0;
 #X connect 39 0 41 0;
 #X connect 39 0 40 0;
-#X connect 39 0 43 0;
+#X connect 39 0 45 0;
 #X connect 40 0 29 0;
 #X connect 41 0 26 0;
-#X connect 43 0 15 1;
-#X connect 44 0 15 2;
-#X connect 45 1 19 0;
-#X connect 45 1 46 1;
-#X connect 45 1 47 1;
-#X connect 46 0 32 0;
-#X connect 46 1 33 0;
-#X connect 46 2 34 0;
+#X connect 43 1 19 0;
+#X connect 43 1 44 1;
+#X connect 43 1 47 1;
+#X connect 44 0 32 0;
+#X connect 44 1 33 0;
+#X connect 44 2 34 0;
+#X connect 45 0 15 1;
+#X connect 46 0 15 2;
 #X connect 47 0 36 0;
 #X connect 47 1 37 0;
 #X connect 47 2 38 0;
