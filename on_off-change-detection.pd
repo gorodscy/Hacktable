@@ -1,4 +1,4 @@
-#N canvas 402 261 799 775 10;
+#N canvas 618 128 799 775 10;
 #X declare -lib Gem;
 #X obj 173 35 import Gem;
 #X obj 294 167 separator;
@@ -52,12 +52,12 @@ to be major for this to work;
 #X obj 175 -21 gemwin_control;
 #X obj 146 479 unpack 0;
 #X obj 228 614 print movement!;
-#X text 576 543 OFF;
-#X text 637 511 noise;
-#X text 636 528 tone;
-#X obj 620 513 vradio 15 1 0 2 tone-type tone-type-set empty 0 -6 0
+#X text 609 209 OFF;
+#X text 670 177 noise;
+#X text 669 194 tone;
+#X obj 653 179 vradio 15 1 0 2 tone-type tone-type-set empty 0 -6 0
 8 -262144 -1 -1 1;
-#X obj 558 514 vradio 15 1 0 3 tone-radio tone-radio-set empty 0 -6
+#X obj 591 180 vradio 15 1 0 3 tone-radio tone-radio-set empty 0 -6
 0 8 -262144 -1 -1 2;
 #N canvas 1159 622 321 422 audio 0;
 #X obj 25 303 s~ tone-mon;
@@ -422,15 +422,15 @@ set 1 \;;
 #X connect 6 0 4 0;
 #X connect 10 0 11 0;
 #X connect 11 0 4 0;
-#X restore 680 569 pd audio;
-#X floatatom 558 567 3 0 100 1 - tone-level-set tone-level;
-#X floatatom 620 546 5 0 100 1 pitch tone-pitch-set tone-pitch;
-#X floatatom 620 568 5 0 20000 1 HZ tone-hz-set tone-hz;
-#X text 584 568 dB;
-#X text 570 490 TEST TONES;
-#X text 575 528 60;
-#X text 575 511 80;
-#X text 552 586 (100 max);
+#X restore 713 235 pd audio;
+#X floatatom 591 233 3 0 100 1 - tone-level-set tone-level;
+#X floatatom 653 212 5 0 100 1 pitch tone-pitch-set tone-pitch;
+#X floatatom 653 234 5 0 20000 1 HZ tone-hz-set tone-hz;
+#X text 617 234 dB;
+#X text 603 156 TEST TONES;
+#X text 608 194 60;
+#X text 608 177 80;
+#X text 585 252 (100 max);
 #X obj 82 639 s tone-radio-set;
 #X msg 154 592 0;
 #X obj 279 576 print;
@@ -504,13 +504,47 @@ set 1 \;;
 #X msg 539 369 auto \$1;
 #X obj 506 350 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 404 436 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+#X obj 526 460 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X text 423 435 WRITE! one file;
 #X text 592 369 activate/deactivate auto snapshot;
-#X obj 443 372 gemhead 50;
-#X obj 510 460 pix_write 10 10 640 480;
+#X obj 448 426 pix_write 10 10 640 480;
 #X msg 537 344 file noite 85;
+#X obj 531 658 pix_record;
+#X obj 550 627 cnv 15 145 25 empty empty empty 20 12 0 14 -225271 -66577
+0;
+#X msg 560 631 bang;
+#X msg 632 631 auto \$1;
+#X obj 613 632 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0
+1;
+#X obj 540 555 cnv 15 155 65 empty empty empty 20 12 0 14 -225271 -66577
+0;
+#X msg 543 576 file /tmp/mymovie.mov;
+#X obj 544 557 bng 15 250 50 0 empty empty empty 0 -6 0 8 -258699 -1
+-1;
+#N canvas 0 0 450 300 savepanel 0;
+#X obj 114 62 inlet;
+#X obj 114 254 outlet;
+#X obj 114 199 t b a;
+#X obj 114 125 savepanel;
+#X msg 114 162 set file \$1;
+#X connect 0 0 3 0;
+#X connect 2 0 1 0;
+#X connect 2 1 1 0;
+#X connect 3 0 4 0;
+#X connect 4 0 2 0;
+#X restore 564 556 pd savepanel;
+#X msg 600 599 record \$1;
+#X obj 580 601 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0
+1;
+#X obj 543 599 t a;
+#X floatatom 619 661 5 0 0 0 - - -;
+#X obj 443 372 gemhead 40;
+#X text 545 459 WRITE! one image or one video clip;
+#X obj 435 530 spigot;
+#X floatatom 528 482 1 0 0 0 - - -;
+#X obj 484 531 spigot 1;
+#X obj 529 509 == 0;
+#X text 546 483 0: write image \; 1: clip;
 #X connect 1 0 56 0;
 #X connect 2 0 49 0;
 #X connect 3 0 4 0;
@@ -553,7 +587,7 @@ set 1 \;;
 #X connect 54 0 48 2;
 #X connect 55 0 62 0;
 #X connect 55 0 69 0;
-#X connect 55 0 97 0;
+#X connect 55 0 95 0;
 #X connect 56 0 2 0;
 #X connect 57 0 20 0;
 #X connect 58 0 18 0;
@@ -587,8 +621,24 @@ set 1 \;;
 #X connect 83 0 4 0;
 #X connect 84 0 85 1;
 #X connect 85 0 12 0;
-#X connect 90 0 96 0;
+#X connect 90 0 94 0;
 #X connect 91 0 90 0;
-#X connect 92 0 96 0;
-#X connect 95 0 96 0;
-#X connect 97 0 96 0;
+#X connect 92 0 111 0;
+#X connect 92 0 113 0;
+#X connect 95 0 94 0;
+#X connect 96 1 108 0;
+#X connect 98 0 96 0;
+#X connect 99 0 96 0;
+#X connect 100 0 99 0;
+#X connect 102 0 107 0;
+#X connect 103 0 104 0;
+#X connect 104 0 102 0;
+#X connect 105 0 107 0;
+#X connect 106 0 105 0;
+#X connect 107 0 96 0;
+#X connect 109 0 94 0;
+#X connect 111 0 94 0;
+#X connect 112 0 111 1;
+#X connect 112 0 114 0;
+#X connect 113 0 96 0;
+#X connect 114 0 113 1;
