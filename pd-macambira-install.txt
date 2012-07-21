@@ -1,3 +1,4 @@
+#!/bin/sh
 # ---------------------------------------------------------------------------------
 # Instructions for installing pd-macambira
 # 
@@ -44,6 +45,7 @@ sudo apt-get install -y qjackctl
 
 mkdir pd-repos
 cd pd-repos
+pd_repos_dir=$PWD
 
 # -----------
 # Clone the pd-extended *core* repo -- a patched up but still bare pd 
@@ -66,12 +68,12 @@ git clone git://github.com/rfabbri/pd-macambira.git
 # -----------
 # Clone Gem 
 #
-# official:
-git clone git://pd-gem.git.sourceforge.net/gitroot/pd-gem/Gem gem.git
+# official (enough for most color detection applications):
+#git clone git://pd-gem.git.sourceforge.net/gitroot/pd-gem/Gem gem.git
 #
 # For more experimental stuff we also have our own Gem fork - not currently needed
 # as most of our contribs have been accepted into the official.
-# git clone git://github.com/rfabbri/Gem.git gem.git
+git clone git://github.com/rfabbri/Gem.git gem.git
 # ******
 
 # ---------------------------------------------------------------------------------
@@ -99,6 +101,9 @@ cd packages/linux_make
 # error. Also try make install multiple times if you get any error.
 make install && make package
 
+# you can use something like -j 3 if you have 2 or more cores, for parallel
+# compilation
+
 # ---------------------------------------------------------------------------------
 # Install your new & all-powerful Pd
 
@@ -109,7 +114,9 @@ sudo dpkg -i Pd-*.deb
 # ---------------------------------------------------------------------------------
 
 # chdir into pd-repos
-cd ../../../
+#cd ../../../
+
+cd $pd_repos_dir
 
 # clone AirHackTable from our dev Fefo Gorodscy
 git clone git://github.com/wakku/Hacktable.git hacktable
@@ -117,7 +124,7 @@ git clone git://github.com/wakku/Hacktable.git hacktable
 cd hacktable
 
 # -----------
-# you can now test the color detection code by opening/testing the patches
+# you can now run/test the color detection code by opening/testing the patches
 #
 pd-extended color-detection-demo.pd  
 #
@@ -161,7 +168,7 @@ git clone git@github.com:rfabbri/beck-repo.git
 # for this and search for 'pd-extended'
 
 # installl the new pd-extended
-sudo dpkg -i Pd-*.deb
+# sudo dpkg -i Pd-*.deb
 
 
 # -----------
@@ -176,5 +183,5 @@ sudo dpkg -i Pd-*.deb
 # make gem_install
 
 # you may have to add your user to the video group
-sudo gpasswd -a [user] video
+# sudo gpasswd -a [user] video
 
