@@ -27,8 +27,9 @@ git clone git://github.com/rfabbri/pd-macambira.git
 # Gem do repositório
 # git clone git://pd-gem.git.sourceforge.net/gitroot/pd-gem/Gem gem.git
 
-# Gem do Lab Macambira
-git clone git://github.com/rfabbri/Gem.git gem.git
+# Gem do Lab Macambira: para coisas mais experimentais - desnecessario
+# atualmente pois a maioria das coisas estao no repo oficial
+ git clone git://github.com/rfabbri/Gem.git gem.git
 # ******
 
 cd pd-macambira/
@@ -58,7 +59,8 @@ git clone git://github.com/wakku/Hacktable.git hacktable
 # atualizar
 # git pull
 
-# pega deteccao de cor (branch hacktable)
+# pega deteccao de cor (branch hacktable) : desnecessario atualmente - ja tem
+# direto no repo oficial
 cd gem.git
 git checkout remotes/origin/hacktable
 git checkout -b hacktable
