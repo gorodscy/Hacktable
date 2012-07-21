@@ -6,6 +6,10 @@ instrument based on floating origamis observed by webcams. See
 
 = The Code =
 
+== Installing ==
+
+See pd-macambira-install.txt
+
 == Pure Data Patches ==
 
 The file hacktable.pd is the main file, to be loaded into pd-extended
