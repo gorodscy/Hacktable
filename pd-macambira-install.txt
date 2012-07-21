@@ -1,12 +1,43 @@
-# Dependência
+# ---------------------------------------------------------------------------------
+# Instructions for installing pd-macambira
+# 
+# INTRODUCTION
+#
+#    These instructions are useful for installing the AirHackTable software and
+#    other color- and video-based controllers from lab macambira.
+#
+# AUTHORS
+#
+#    Ricardo Fabbri and Gilson Beck, labmacambira.sf.net
+#
+# SEE ALSO
+#    wiki.nosdigitais.teia.org.br/AirHackTable
+#
+# ---------------------------------------------------------------------------------
+
+
+# ---------------------------------------------------------------------------------
+# Dependencies
+#
+# You may also try the instructions and other automated config scripts for
+# more complete dependencies installation at
+#
+#    http://wiki.nosdigitais.teia.org.br/Configuring_Ubuntu_for_Programming
+#
 sudo apt-get install -y autoconf automake libtool libfftw3-dev libsndfile1-dev liblua5.1-0-dev tcl8.5-dev swig ladspa-sdk libspeex-dev libmp3lame-dev libgl1-mesa-dev mesa-utils libglu1-mesa libglu1-mesa-dev libgsl0-dev tcllib cheese libasound2-dev
 
-# Pré requisitos se quiser obter repos oficiais
+# Pré requisite for the official pd extended repository. We'll use a github
+# mirror which is faster and tested by us, but may be slightly outdated as we
+# may forget to sync.
+#
 # sudo apt-get install git-svn
 
-#dependências para o som - extra
-sudo apt-get install -y autoconf automake qjackctl
+#extra dependencies for the sound  - if you want jack
+sudo apt-get install -y qjackctl
 
+# ---------------------------------------------------------------------------------
+# Repositories
+#
 # Desinstale tudo que for pacote pure-data do ubuntu
 # sudo apt-get install synaptic
 # synaptic
@@ -14,24 +45,39 @@ sudo apt-get install -y autoconf automake qjackctl
 mkdir pd-repos
 cd pd-repos
 
-# Core do pd-extended
+# -----------
+# Clone the pd-extended *core* repo -- a patched up but still bare pd 
 git clone git://pure-data.git.sourceforge.net/gitroot/pure-data/pd-extended.git
-# ***
-# pd-svn
-# git svn clone https://pure-data.svn.sourceforge.net/svnroot/pure-data/trunk pd-svn
- 
-# pd-svn do repositório Macambira
+
+# -----------
+# Clone pd-svn -- a complete repository of all Pd contribs to make a full pd
+# extended, but still w/o Gem at this point
+# 
+# Clone pd-svn converted into a Git from our own LabMacambira.sf.net fork,
+# which is set to track the official one. You can use the official one here if
+# you prefer, as indicated.
+#
+# official:
+#  git svn clone https://pure-data.svn.sourceforge.net/svnroot/pure-data/trunk pd-svn
+#
+# ours (tracks official, but is faster, has a few optional extra branches):
 git clone git://github.com/rfabbri/pd-macambira.git
 
-# ***
-# Gem do repositório
-# git clone git://pd-gem.git.sourceforge.net/gitroot/pd-gem/Gem gem.git
-
-# Gem do Lab Macambira: para coisas mais experimentais - desnecessario
-# atualmente pois a maioria das coisas estao no repo oficial
- git clone git://github.com/rfabbri/Gem.git gem.git
+# -----------
+# Clone Gem 
+#
+# official:
+git clone git://pd-gem.git.sourceforge.net/gitroot/pd-gem/Gem gem.git
+#
+# For more experimental stuff we also have our own Gem fork - not currently needed
+# as most of our contribs have been accepted into the official.
+# git clone git://github.com/rfabbri/Gem.git gem.git
 # ******
 
+# ---------------------------------------------------------------------------------
+# Link up the repositories into a full-fledged bleeding-edge pd extended build
+# (pd-macambira)
+#
 cd pd-macambira/
 mv pd pd-original
 ln -s ../pd-extended pd
@@ -42,63 +88,93 @@ cd externals
 ln -s ../../gem.git Gem
 
 cd .. 
-# dentro do pd-macambira
+
+# ---------------------------------------------------------------------------------
+# Build (this may take a couple of hours)
+#
+# inside pd-macambira
+#
 cd packages/linux_make
+# PS: do not forget a make clean in case you did an update or if you get an
+# error. Also try make install multiple times if you get any error.
 make install && make package
+
+# ---------------------------------------------------------------------------------
+# Install your new & all-powerful Pd
 
 sudo dpkg -i Pd-*.deb
 
-# Depois de tudo
+# ---------------------------------------------------------------------------------
+# Finally our other repos with Pd patches, samples, and stuff
+# ---------------------------------------------------------------------------------
 
-# vai ao pd-repos
+# chdir into pd-repos
 cd ../../../
 
-# clona a AirHackTable
+# clone AirHackTable from our dev Fefo Gorodscy
 git clone git://github.com/wakku/Hacktable.git hacktable
 
-# atualizar
-# git pull
+cd hacktable
 
-# pega deteccao de cor (branch hacktable) : desnecessario atualmente - ja tem
-# direto no repo oficial
-cd gem.git
-git checkout remotes/origin/hacktable
-git checkout -b hacktable
+# -----------
+# you can now test the color detection code by opening/testing the patches
+#
+pd-extended color-detection-demo.pd  
+#
+# if this works then open/test color-detection-demo-blob.pd
+pd-extended color-detection-demo-blob.pd  
 
-# repetir
-# adicionei aqui. É preciso testar.
-cd ..
-cd pd-macambira
-cd packages/linux_make
-make install && make package
+# Extra-official color detection - currently just use the official, it has our
+# contribs. This will only work if you clone Gem from us instead of the
+# official.
+#
+# cd gem.git
+# git checkout remotes/origin/hacktable
+# git checkout -b hacktable
 
-# desinstalar todos os pacotes puredata e gem que vem com o ubuntu
+# -------
+# Remaining repositories
+git clone git@github.com:rfabbri/pd-macambira-utils.git
 
-# instalar o novo pacote
+# repositorio with diverse stuff from gilson beck (code to modulate audio samples,
+# audio samples themselves, etc)
+
+# gilson becks original repo - no write access at the moment
+# git clone https://github.com/gilsonbeck/beck-repo.git
+
+# we currently use rfabbri's fork
+git clone git@github.com:rfabbri/beck-repo.git
+
+# ---------------------------------------------------------------------------------
+# Updating the code
+
+# Pull the changes from the remotes. do this for each repo you want to update
+#  git pull
+
+# Repeat the above steps if you updated any pd-extended repo or Gem
+#  cd ..
+#  cd pd-macambira
+#  cd packages/linux_make
+#  make install && make package
+
+# uninstall all the previous .debs that you had installed. You can use synaptic
+# for this and search for 'pd-extended'
+
+# installl the new pd-extended
 sudo dpkg -i Pd-*.deb
 
 
-# para atualizar
+# -----------
+# Easily updating only Gem (faster than the above)
 
-# Caso seja necessário dar um update no Gem apenas
-sudo mv /usr/lib/pd-extended/extra/Gem /usr/lib/pd-extended/extra/Gem-original
-cd ~/pd-repos/pd-macambira/externals/build/lib/pd-extended/extra/Gem
-sudo ln -s $PWD /usr/lib/pd-extended/extra/Gem
-make
-# vai ao pd-repos/pd-macambira/externals
-cd .. 
-make gem_install
+# sudo mv /usr/lib/pd-extended/extra/Gem /usr/lib/pd-extended/extra/Gem-original
+# cd ~/pd-repos/pd-macambira/externals/build/lib/pd-extended/extra/Gem
+# sudo ln -s $PWD /usr/lib/pd-extended/extra/Gem
+# make
+# go to pd-repos/pd-macambira/externals
+# cd .. 
+# make gem_install
 
-# adiciona usuario ao grupo video
+# you may have to add your user to the video group
 sudo gpasswd -a [user] video
-
-# repositorio de utilitario
-git clone git@github.com:rfabbri/pd-macambira-utils.git
-
-# repositorio de coisas diversas do gilson beck
-
-#git clone https://github.com/gilsonbeck/beck-repo.git
-
-git clone https://github.com/rfabbri/beck-repo.git
-
 
