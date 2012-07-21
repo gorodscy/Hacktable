@@ -97,6 +97,8 @@ git clone git@github.com:rfabbri/pd-macambira-utils.git
 
 # repositorio de coisas diversas do gilson beck
 
-git clone https://github.com/gilsonbeck/beck-repo.git
+#git clone https://github.com/gilsonbeck/beck-repo.git
+
+git clone https://github.com/rfabbri/beck-repo.git
 
 
