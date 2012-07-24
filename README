@@ -15,6 +15,15 @@ See the INSTALL file
 The file hacktable.pd is the main file, to be loaded into pd-extended
   http://puredata.info
 
+
+There are also many other cool patches that do interesting things on their own:
+* colorblob_keyboard_control.pd : controls any application using the orientation
+of a color object detected on a webcam.
+* keysym-demo1.pd: simple test for the keyboard controller pd object
+* on_off-change-detection.pd: a simple surveillance app to monitor significant
+changes on a webcam. Upon changes, a beep is emmitted, so you can hear it when
+asleep, get your gun, and shoot the intruder ;P
+
 == Pure Data Externals ==
 
 See the subdir "cor" and the README file in there.
