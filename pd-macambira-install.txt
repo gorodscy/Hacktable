@@ -25,7 +25,7 @@
 #
 #    http://wiki.nosdigitais.teia.org.br/Configuring_Ubuntu_for_Programming
 #
-sudo apt-get install -y autoconf automake libtool libfftw3-dev libsndfile1-dev liblua5.1-0-dev tcl8.5-dev swig ladspa-sdk libspeex-dev libmp3lame-dev libgl1-mesa-dev mesa-utils libglu1-mesa libglu1-mesa-dev libgsl0-dev tcllib cheese libasound2-dev
+sudo apt-get install -y autoconf automake libtool libfftw3-dev libsndfile1-dev liblua5.1-0-dev tcl8.5-dev swig ladspa-sdk libspeex-dev libmp3lame-dev libgl1-mesa-dev mesa-utils libglu1-mesa libglu1-mesa-dev libgsl0-dev tcllib cheese libasound2-dev libv4l-dev
 
 # Pré requisite for the official pd extended repository. We'll use a github
 # mirror which is faster and tested by us, but may be slightly outdated as we
