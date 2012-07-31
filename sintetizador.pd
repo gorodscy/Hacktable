@@ -1,0 +1,51 @@
+#N canvas 39 159 450 563 10;
+#X declare -lib mrpeach;
+#X obj 12 13 import mrpeach;
+#X obj 17 59 udpreceive 9001;
+#X obj 17 90 unpackOSC;
+#X obj 17 122 routeOSC /obj1 /obj2;
+#X obj 17 155 unpack f f f f;
+#X floatatom 2 214 5 0 0 0 - - -;
+#X obj 110 342 mtof;
+#X obj 109 413 *~;
+#X obj 110 448 *~;
+#X obj 110 491 output~;
+#X obj 110 372 osc~;
+#X obj 148 371 osc~ 10;
+#X obj 134 157 unpack f f f f;
+#X text 110 13 precisamos incluir essa biblioteca para usar OSC;
+#X text 119 57 esperamos por mensagens vindas da porta 9001;
+#X text 84 88 desempacotamos todas as mensagens OSC que chegam;
+#X text 151 113 mandamos as mensagens /obj1 para um lado e /obj2 para
+outro;
+#X text 226 151 desempacotamos os 4 numeros que representam x \, y
+\, size e angle;
+#X text 149 338 convertemos de MIDI note para frequencia;
+#X text 201 379 modulamos uma onda na outra para ter um sintetizador
+de audio bastante simples;
+#X text 103 307 o x do obj1 controla a frequencia;
+#X text 141 444 o y do obj1 controla a amplitude;
+#X text 183 506 plugamos o sintetizador na saida de audio. clique em
+dsp para ligar o audio;
+#X text 108 225 a parte de cima eh suficiente para entender como receber
+OSC de um computador qualquer. nessa parte \, vamos ver como usar os
+valores recebidos para fazer barulho.;
+#X text 96 212 -----------------------------------------------;
+#X text 101 276 -----------------------------------------------;
+#X floatatom 66 186 5 0 0 0 - - -;
+#X text 12 228 x;
+#X text 77 199 y;
+#X connect 1 0 2 0;
+#X connect 2 0 3 0;
+#X connect 3 0 4 0;
+#X connect 3 1 12 0;
+#X connect 4 0 5 0;
+#X connect 4 0 6 0;
+#X connect 4 1 8 1;
+#X connect 4 1 26 0;
+#X connect 6 0 10 0;
+#X connect 7 0 8 0;
+#X connect 8 0 9 0;
+#X connect 8 0 9 1;
+#X connect 10 0 7 0;
+#X connect 11 0 7 1;
