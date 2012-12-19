@@ -141,7 +141,7 @@ pd-extended color-detection-demo-blob.pd
 
 # -------
 # Remaining repositories
-git clone git@github.com:rfabbri/pd-macambira-utils.git
+git clone git://github.com/rfabbri/pd-macambira-utils.git
 
 # repositorio with diverse stuff from gilson beck (code to modulate audio samples,
 # audio samples themselves, etc)
@@ -150,7 +150,7 @@ git clone git@github.com:rfabbri/pd-macambira-utils.git
 # git clone https://github.com/gilsonbeck/beck-repo.git
 
 # we currently use rfabbri's fork
-git clone git@github.com:rfabbri/beck-repo.git
+git clone git://github.com/rfabbri/beck-repo.git
 
 # ---------------------------------------------------------------------------------
 # Updating the code
