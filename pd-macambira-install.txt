@@ -185,3 +185,40 @@ git clone git@github.com:rfabbri/beck-repo.git
 # you may have to add your user to the video group
 # sudo gpasswd -a [user] video
 
+# ---------------------------------------------------------------------------------
+# If you want to control a video-game using our color detection algorithm
+
+# sudo apt-get install libxrt-dev
+
+# cd $pd_repos_dir
+# cd pd-macambira/externals/aalex
+# make
+
+# If this fails, then you need to either install some libs, or else disable xmms
+# altogether from aalex. To do this you have to edit aalex's makefile and remove
+# everything that has xmms in it. The modifications look like:
+#
+## -pd_linux: pcre.pd_linux xmms.pd_linux x11mouse.pd_linux x11key.pd_linux
+## +pd_linux: pcre.pd_linux x11mouse.pd_linux x11key.pd_linux
+##  
+##  .SUFFIXES: .pd_linux
+##  
+## @@ -23,11 +23,10 @@ LINUXCFLAGS =  -DPD -O2 -funroll-loops -fomit-frame-pointer \
+##      -Wno-unused -Wno-parentheses -Wno-switch -fPIC
+##  
+##  LINUXINCLUDE =  -I../src -L/usr/lib/X11 -I/usr/include/X11 -L/usr/X11R6/lib -I../../pd/src
+## -LINUXLINKS = -lX11 -lXtst -lgtk -lgdk -lgmodule -lglib -ldl -lXi -lXext -lX11 -lm -lxmms
+## +LINUXLINKS = -lX11 -lXtst -ldl -lXi -lXext -lX11 -lm 
+##  
+##  .c.pd_linux:
+## -	cc $(LINUXCFLAGS) $(LINUXINCLUDE) -o $*.o -c $*.c \
+## -    `xmms-config --cflags`
+## +	cc $(LINUXCFLAGS) $(LINUXINCLUDE) -o $*.o -c $*.c 
+##    ld --export-dynamic -shared -o $*.pd_linux $*.o -lpcre -lc -lm\
+##
+#
+# Once compilation works (ie, you have produced the desired Pd objects inside
+# aalex), now add this directory to your ~/.pdrc. Just do something like
+#
+# echo "-path $PWD" >> ~/.pdrc
+
