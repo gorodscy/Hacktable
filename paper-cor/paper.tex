@@ -1,95 +1,6 @@
 \documentclass[a4paper,12pt]{elsarticle_rfabbri}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% prints all equation environments and nothing else, each cropped, one to a page.
-%\usepackage[active,tightpage]{preview}
-%\PreviewEnvironment{equation*}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\usepackage{xiiiemc}
-\usepackage[small,bf]{caption}
-\usepackage{graphicx}
-\usepackage[usenames,dvipsnames]{color}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{amsmath}
-\usepackage{indentfirst}
-\usepackage{natbib}
-\usepackage{fancyhdr}
-%\usepackage[brazil]{babel}  				 					% CONVERSÃO EM PORTUGUÊS
-\usepackage[utf8]{inputenc}                              	  % CONVERSÃO EM PORTUGUÊS
-\usepackage{bbm} 								%para escrever double 1
-\usepackage{algorithm}						% para escrever algoritmos
-\usepackage{algpseudocode}				%para escrever pseudo-códigos
-\usepackage{subfigure} 							%poe varias figuras como se fossem uma só
-\usepackage{url}	
-\usepackage[bookmarks,pdfborder={0 0 0}]{hyperref} % cria índice com referencias no arquivo pdf, 
-\usepackage[top=2.0cm, bottom=3.3cm, left=2.5cm,right=2.5cm]{geometry} % Margens
-\usepackage{setspace}    					     % para colocar espaçamento entre linhas
-\definecolor{seagreen}{RGB}{46,139,87}
-\usepackage{scalefnt}
-\usepackage{listings}
-
-\lstset{
-  extendedchars=\true,
-  inputencoding=utf8,
-  language=Matlab,
-  %showstringspaces=false,
-  formfeed=\newpage,
-  tabsize=4,
-  %commentstyle=\itshape,
-  basicstyle=\ttfamily\scriptsize,
-  %basicstyle={\small\fontfamily{fvm}\fontseries{m}\selectfont},
-  commentstyle=\color{Apricot}\bfseries,
-  %commentstyle=\color{red}\itshape,
-  stringstyle=\color{red},
-  identifierstyle=\color{PineGreen},
-  showstringspaces=false,
-  keywordstyle=\color{blue}\bfseries,
-  moredelim=[il][\large\textbf]{\#\# },
-  morekeywords={models,range},
-  numbers=left,
-  numbersep=2pt,
-  numberstyle=\tiny,%\color{blue}\bfseries,
-  literate=%
-  {ã}{{\~a}}1
-  {â}{{\^a}}1
-  {õ}{{\~o}}1
-  {á}{{\'a}}1
-  {ú}{{\'u}}1
-  {í}{{\'i}}1
-  {é}{{\'e}}1
-  {Ç}{{\c{C}}}1
-  {Õ}{{\~O}}1
-  {Ê}{{\^E}}1
-  {ó}{{\'o}}1
-  {à}{{\`a}}1
-  {Â}{{\^A}}1
-  {ô}{{\^o}}1
-  {ê}{{\^e}}1
-  {ç}{{\c{c}}}1
-}
-
-%###########################################
-%  outros comandos
-
-\providecommand{\sin}{} \renewcommand{\sin}{\hspace{2pt}\mathrm{sen}}
-\providecommand{\tan}{} \renewcommand{\tan}{\hspace{2pt}\mathrm{tg}}
-\newcommand{\ie}{{\it i.e.}}
-\newcommand{\etc}{{\it etc}}
-\newcommand{\eg}{{\it e.g.}}
-\newcommand{\keywordsname}{Keywords}
-\newenvironment{keywords}{%
-\noindent
-        {\em \bfseries \keywordsname: }%
-         \rm }
-      {\endquotation \vskip 12bp}
-
-\newcommand{\code}[2]{
- \vspace{1em}
- \subsubsection*{#1}
- \lstinputlisting{#2}
-}
-
+\input{preamble}
 
 \begin{document}
 
@@ -97,13 +8,74 @@
 
 \section{Introduction}
 
-Color is attractive.
+\begin{verbatim}
+- color detector of 6 predefined classes in the context of trakcing moving
+objects made of paper in an art installation
+- skin color obtained as side effect
+- fine tuned to match human perception, as shown  in experiments
+- basically uses a decision tree on HSV color space.
+-- TODO: decision trees are the correct term?
+\end{verbatim}
+
+\subsection{Uses of color detection}
+- solve segmentation problem
+- structure from motion: enables to track objects
+
+
+
+\subsection{Previous work}
+\textit{\textbf{Why is there a need for a new approach to color detection, given that so many
+hard problems have been solved in computer vision in the last decade?}}
+
+
+
+\section{Engineering the Detector} 
+
+\subsection{Design}
+Requirements: real-time, simplicity.
+
+
+\subsection{Training and Fine-Tuning through Evaluation}
+
+The system was trained and fine-tuned in Scilab~\cite{Fabbri:etal:Arxiv2012}. It
+was then converted to C for use within the Pure Data real time dataflow
+framework.
+
+PS3Eye-specific.
+
+\paragraph{A new ``origami'' color paper dataset}
+The dataset is available on-line at..
+
+\subsection{Execution Procedure}
+
+\subsection{Color Balance}
+We start off with a color calibration board in order to lock in the adaptive white
+balance of the camera. This is merely a white sheet with small samples of the
+actual color paper to be used in the application. We don't alter the hardware of
+the camera as we want to keep the system easy to use by the non-specialist (\eg,
+a musician or arts performer). Work is in progress to hack open source camera
+drivers in order to provide hardware white balance locking and disabling of
+the PS3Eye camera. However, the present procedure of white balance
+calibration is simpler and will work with any cheap video camera.
+
+\section{Experimental Results}
+
+\subsection{Main Results and Evaluation}
+\subsection{Comparison with Other Approaches}
+
+
+\section{Conclusions}
+
+\begin{verbatim}
+- system extensively used in actual concerts and art installations, for
+controlling sound
+- it iproves state of the art in being very simple and very accurate
+\end{verbatim}
 
 \section*{Acknowledgements}
 We thank Teia, casa de criacao, who initially funded the development of the proposed
 system.  The authors also thank the Brazilian agencies CNPq, CAPES, FAPESP, and
 FAPERJ for later financial support.
-
 
 \bibliographystyle{elsarticle-num}
 \bibliography{personal}

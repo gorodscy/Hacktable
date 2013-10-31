@@ -1,0 +1,12 @@
+\begin{thebibliography}{1}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{Fabbri:etal:Arxiv2012}
+R.~Fabbri, O.~M. Bruno, L.~F. Costa, Scilab and {SIP} for image processing,
+  Arxiv preprint arXiv:1203.4009.
+
+\end{thebibliography}
